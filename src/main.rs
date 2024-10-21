@@ -39,7 +39,7 @@ fn write_to_file(path: &str, content: &str) -> std::io::Result<()> {
 
 fn compile_java_class(file: &str) -> ExitStatus {
     let a: Vec<&str> = vec![file];
-    Command::new("javac")
+    Command::new("/nix/store/p5w6cmwqfvhyaf4vjr7jb18a90icrrr2-openjdk-21.0.3+9/bin/javac")
         .args(&a)
         .stdout(Stdio::null())
         .spawn()

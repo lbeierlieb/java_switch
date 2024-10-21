@@ -18,6 +18,9 @@
         # For `nix build` & `nix run`:
         defaultPackage = naersk'.buildPackage {
           src = ./.;
+          buildInputs = [
+            pkgs.openjdk
+          ];
         };
 
         # For `nix develop`:

@@ -8,24 +8,46 @@ use std::{
 use itertools::Itertools;
 
 const JAVA_BEFORE: &str = r#"public class Main{public static void main(String[] args){int i=Integer.parseInt(args[0]);int j=plusOne(i);System.out.println(i+" plus one is "+j);}public static int plusOne(int i){return switch(i){"#;
-
 const JAVA_AFTER: &str = "default -> throw new UnsupportedOperationException();};}}";
+const JAVA_FILENAME: &str = "Main.java";
+const STEP_BEFORE_BINARY_SEARCH: u64 = 1000;
+const JAVAC_VERSIONS: [&str; 6] = [
+    "javac17", "javac18", "javac19", "javac20", "javac21", "javac22",
+];
 
 fn main() {
-    let args = env::args().collect::<Vec<_>>();
-    let i = args
-        .get(1)
-        .and_then(|i| i.parse::<u64>().ok())
-        .expect("Just supply a single number");
+    for javac in JAVAC_VERSIONS {
+        print!("Highest number of cases for {}:", javac);
+        let limit = find_limit(JAVAC_VERSIONS[0]);
+        println!(" {}", limit);
+    }
+}
+
+fn find_limit(javac: &str) -> u64 {
+    let mut min = 0;
+    let mut max = STEP_BEFORE_BINARY_SEARCH;
+
+    while test_if_compiles(javac, max) {
+        min = max;
+        max += STEP_BEFORE_BINARY_SEARCH;
+    }
+
+    while min != max {
+        let mid = (max + min) / 2;
+        if test_if_compiles(javac, mid) {
+            min = mid + 1;
+        } else {
+            max = mid - 1;
+        }
+    }
+
+    min
+}
+
+fn test_if_compiles(javac: &str, i: u64) -> bool {
     let code = generate_java_code(i);
-    write_to_file("Main.java", &code).expect("failed to do it");
-    println!("Compilation status: {}", compile_java_class("Main.java"));
-    which("javac17");
-    which("javac18");
-    which("javac19");
-    which("javac20");
-    which("javac21");
-    which("javac22");
+    write_to_file(JAVA_FILENAME, &code).expect("failed to write java file");
+    compile_java_class(javac, JAVA_FILENAME).success()
 }
 
 fn generate_java_code(i: u64) -> String {
@@ -43,21 +65,12 @@ fn write_to_file(path: &str, content: &str) -> std::io::Result<()> {
     Ok(())
 }
 
-fn compile_java_class(file: &str) -> ExitStatus {
+fn compile_java_class(javac: &str, file: &str) -> ExitStatus {
     let a: Vec<&str> = vec![file];
-    Command::new("javac22")
+    Command::new(javac)
         .args(&a)
         .stdout(Stdio::null())
-        .spawn()
-        .unwrap()
-        .wait()
-        .unwrap()
-}
-
-fn which(file: &str) -> ExitStatus {
-    let a: Vec<&str> = vec![file];
-    Command::new("which")
-        .args(&a)
+        .stderr(Stdio::null())
         .spawn()
         .unwrap()
         .wait()

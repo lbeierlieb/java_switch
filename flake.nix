@@ -19,8 +19,13 @@
         defaultPackage = naersk'.buildPackage {
           src = ./.;
           buildInputs = [
-            pkgs.openjdk
+            pkgs.openjdk21
+            pkgs.openjdk22
           ];
+          postInstall = ''
+            ln -s ${pkgs.openjdk21}/bin/javac $out/bin/javac21
+            ln -s ${pkgs.openjdk22}/bin/javac $out/bin/javac22
+          '';
         };
 
         # For `nix develop`:

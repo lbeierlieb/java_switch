@@ -1,5 +1,4 @@
 use std::{
-    env,
     fs::File,
     io::Write,
     process::{Command, ExitStatus, Stdio},
@@ -11,8 +10,8 @@ const JAVA_BEFORE: &str = r#"public class Main{public static void main(String[] 
 const JAVA_AFTER: &str = "default -> throw new UnsupportedOperationException();};}}";
 const JAVA_FILENAME: &str = "Main.java";
 const STEP_BEFORE_BINARY_SEARCH: u64 = 1000;
-const JAVAC_VERSIONS: [&str; 6] = [
-    "javac17", "javac18", "javac19", "javac20", "javac21", "javac22",
+const JAVAC_VERSIONS: [&str; 8] = [
+    "javac15", "javac16", "javac17", "javac18", "javac19", "javac20", "javac21", "javac22",
 ];
 
 fn main() {

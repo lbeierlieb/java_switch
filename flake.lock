@@ -50,6 +50,38 @@
         "type": "indirect"
       }
     },
+    "nixpkgs15": {
+      "locked": {
+        "lastModified": 1616620666,
+        "narHash": "sha256-XxE4Y2Jtpb/Jg/Kh6i/YZcOHrFf5XE1QyzVSNBMz/7I=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0ffaecb6f04404db2c739beb167a5942993cfd87",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0ffaecb6f04404db2c739beb167a5942993cfd87",
+        "type": "github"
+      }
+    },
+    "nixpkgs16": {
+      "locked": {
+        "lastModified": 1634763423,
+        "narHash": "sha256-4vvyW8+iXLuOr50KeE9WR/YlODvHal6n9a2sDOlh7dI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "407f8825b321617a38b86a4d9be11fd76d513da2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "407f8825b321617a38b86a4d9be11fd76d513da2",
+        "type": "github"
+      }
+    },
     "nixpkgs17": {
       "locked": {
         "lastModified": 1720494119,
@@ -167,6 +199,8 @@
         "flake-utils": "flake-utils",
         "naersk": "naersk",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs15": "nixpkgs15",
+        "nixpkgs16": "nixpkgs16",
         "nixpkgs17": "nixpkgs17",
         "nixpkgs18": "nixpkgs18",
         "nixpkgs19": "nixpkgs19",

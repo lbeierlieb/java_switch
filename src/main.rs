@@ -20,6 +20,12 @@ fn main() {
     let code = generate_java_code(i);
     write_to_file("Main.java", &code).expect("failed to do it");
     println!("Compilation status: {}", compile_java_class("Main.java"));
+    which("javac17");
+    which("javac18");
+    which("javac19");
+    which("javac20");
+    which("javac21");
+    which("javac22");
 }
 
 fn generate_java_code(i: u64) -> String {
@@ -42,6 +48,16 @@ fn compile_java_class(file: &str) -> ExitStatus {
     Command::new("javac22")
         .args(&a)
         .stdout(Stdio::null())
+        .spawn()
+        .unwrap()
+        .wait()
+        .unwrap()
+}
+
+fn which(file: &str) -> ExitStatus {
+    let a: Vec<&str> = vec![file];
+    Command::new("which")
+        .args(&a)
         .spawn()
         .unwrap()
         .wait()

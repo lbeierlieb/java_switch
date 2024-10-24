@@ -4,6 +4,26 @@ Somehow we asked ourself the question how many cases can be put into a java swit
 For Java 21, we found the number was 5481.
 Then, the project escalated and with the help of Nix, we tested the limit of cases for all javac from the openjdks 15 to 17.
 
+The java code that is tested looks like this:
+```
+public class Main{
+    public static void main(String[] args) {
+        int i=Integer.parseInt(args[0]);
+        int j=plusOne(i);
+        System.out.println(i+" plus one is "+j);
+    }
+
+    public static int plusOne(int i){
+        return switch(i) {
+            case 0 -> 1;
+            case 1 -> 2;
+            <...>
+            default -> throw new UnsupportedOperationException();
+        };
+    }
+}
+```
+
 ## Run
 
 ```
